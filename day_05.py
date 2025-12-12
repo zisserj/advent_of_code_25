@@ -16,7 +16,7 @@ test = '''3-5
 11
 17
 32
-549111622810643'''
+9282321'''
 
 def process_input(text):
     ranges_str, inventory_str = text.split('\n\n')
@@ -46,6 +46,7 @@ print('---')
 
 
 def q2(ranges):
+    ranges = sorted(ranges)
     for i in range(len(ranges)):
         s, e = ranges[i]
         # find all entries overlapping with current range and merge them
@@ -53,42 +54,25 @@ def q2(ranges):
             if j != i and (ranges[j][0] != -1):
                 j_s, j_e = ranges[j]
                 if (s >= j_s and s <= j_e) or (e >= j_s and e <= j_e):
-                    print(f'overlap found: {s}-{e}, {j_s}-{j_e}')
+                    # print(f'overlap found: {s}-{e}, {j_s}-{j_e}')
                     s = min(s, j_s)
                     e = max(e, j_e)
                     ranges[i] = (s, e)
                     ranges[j] = (-1,-1)
-                    print(f'now {ranges[i]}')
+                    # print(f'now {ranges[i]}')
                 elif (j_s >= s and j_s <= e) and (j_e >= s and j_e <= s):
                     ranges[j] = (-1,-1)
     return ranges
 
-ran, inv = process_input(test)
+ran, inv = process_input(content)
 ran2 = q2(ran)
 
 stock = 0
 for s, e in ran2:
     if s != -1:
-        print(s, e)
+        #print(s, e)
         c_items = e - s + 1
         stock += c_items
 print(stock)
 
-def q2_alt(ranges):
-    total = 0
-    for i in range(len(ranges)):
-        s, e = ranges[i]
-        # find all entries overlapping with current range and merge them
-        for j in range(len(ranges)):
-            if j != i and (ranges[j][0] != -1):
-                j_s, j_e = ranges[j]
-                if (s >= j_s and s <= j_e) or (e >= j_s and e <= j_e):
-                    print(f'overlap found: {s}-{e}, {j_s}-{j_e}')
-                    s = min(s, j_s)
-                    e = max(e, j_e)
-                    ranges[i] = (s, e)
-                    ranges[j] = (-1,-1)
-                    print(f'now {ranges[i]}')
-                elif (j_s >= s and j_s <= e) and (j_e >= s and j_e <= s):
-                    ranges[j] = (-1,-1)
-    return ranges
+# 352807801032167
